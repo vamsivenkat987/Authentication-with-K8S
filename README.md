@@ -20,13 +20,8 @@ To run this project, first install skaffold, npm and kubernetes on local machine
 
 ```
 $ git clone https://github.com/vamsivenkat987/Authentication-with-K8S.git
-$ Change your Docker repo name in every Dockerfile and update same repo in kubernetes yaml file.
-windows
-$ Install docker desktop for windows and run kubernetes init
+$ Change docker image name in kubernetes file. change my project name with your new project name.
 $ choco install -y skaffold
-$ cd infra/k8s 
-$ kubectl apply -f *
-$ cd ../..
 $ skaffold dev
 ```
 Some configuration on Google Cloud
@@ -37,9 +32,14 @@ Some configuration on Google Cloud
 4) Create a new Cloud Build for contionus integration and continous deployment.
 5) To run google commands in windows terminal, gcloud is used. 
 $ (New-Object Net.WebClient).DownloadFile("https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe", "$env:Temp\GoogleCloudSDKInstaller.exe") & $env:Temp\GoogleCloudSDKInstaller.exe
-
-    
-
-
+gcloud init (re-initialize project and open newly created project)
+$ gcloud components install kubectl
+$ gcloud container clusters get-credentials <clustername>
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.4/deploy/static/provider/cloud/deploy.yaml
+After compiling above command a new ngnix-ingress load balancer is created in your project. The ip adderss of this load balancer is satrting gateway of the application. So add the new ip adderss in system32/drivers/etc/hosts file. Add ip-address (tickecting.dev) in hosts file.
+```
+Creating a jwt-secret
+```
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=(somekeyname)
 ```
 
